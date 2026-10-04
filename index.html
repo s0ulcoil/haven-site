@@ -147,19 +147,26 @@
 
   .link-card {
     display: block;
+    position: relative;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 12px;
     padding: 16px 18px;
     text-decoration: none;
     color: inherit;
+    cursor: pointer;
     transition: background 0.25s, border 0.25s, transform 0.2s;
+    overflow: hidden;
   }
 
   .link-card:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.4);
     transform: translateX(4px);
+  }
+
+  .link-card:active {
+    transform: translateX(4px) scale(0.98);
   }
 
   .link-title {
@@ -173,6 +180,27 @@
     display: block;
     font-size: 0.85rem;
     color: #9a9a9a;
+  }
+
+  .copy-toast {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: #ffffff;
+    color: #000000;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none;
+  }
+
+  .link-card.copied .copy-toast {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .donate h2 {
@@ -325,14 +353,16 @@
     <div class="divider"></div>
 
     <div class="links">
-      <a class="link-card" href="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/HavenAuto" target="_blank" rel="noopener">
+      <a class="link-card" data-link="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/HavenAuto">
         <span class="link-title">⚡ Подписка с автовыбором</span>
         <span class="link-desc">HavenAuto — сервер выбирается автоматически</span>
+        <span class="copy-toast">✅ Скопировано</span>
       </a>
 
-      <a class="link-card" href="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/Haven" target="_blank" rel="noopener">
+      <a class="link-card" data-link="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/Haven">
         <span class="link-title">🛠 Подписка с ручным подключением</span>
         <span class="link-desc">Haven — выбор сервера вручную</span>
+        <span class="copy-toast">✅ Скопировано</span>
       </a>
     </div>
 
@@ -382,6 +412,32 @@
   }
 
   renderDonations();
+
+  const linkCards = document.querySelectorAll('.link-card');
+
+  linkCards.forEach(card => {
+    card.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      const link = card.getAttribute('data-link');
+
+      try {
+        await navigator.clipboard.writeText(link);
+      } catch (err) {
+        const temp = document.createElement('textarea');
+        temp.value = link;
+        temp.style.position = 'fixed';
+        temp.style.opacity = '0';
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+      }
+
+      card.classList.add('copied');
+      setTimeout(() => card.classList.remove('copied'), 1500);
+    });
+  });
 
   const canvas = document.getElementById('matrix');
   const ctx = canvas.getContext('2d');
