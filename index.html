@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haven VPN — бесплатный доступ</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #000000;
+    color: #e5e5e5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 15px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  #matrix {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    max-width: 620px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 40px 30px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+    animation: fadeIn 0.8s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card h1 {
+    font-size: 1.6rem;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    color: #ffffff;
+  }
+
+  .subtitle {
+    color: #bdbdbd;
+    margin-bottom: 22px;
+    font-size: 1rem;
+  }
+
+  .subtitle span {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .bio {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+
+  .bio strong {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .features h2 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #8a8a8a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .features ul {
+    list-style: none;
+    margin-bottom: 25px;
+  }
+
+  .features li {
+    padding: 8px 0 8px 22px;
+    position: relative;
+    color: #e0e0e0;
+  }
+
+  .features li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #ffffff;
+  }
+
+  .cta-text {
+    margin-bottom: 15px;
+    color: #bdbdbd;
+  }
+
+  .tg-button {
+    display: block;
+    text-align: center;
+    background: #ffffff;
+    color: #000000;
+    text-decoration: none;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+    border: 1px solid #ffffff;
+  }
+
+  .tg-button:hover {
+    transform: translateY(-2px);
+    background: #e0e0e0;
+    box-shadow: 0 12px 28px rgba(255, 255, 255, 0.2);
+  }
+
+  .divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.12);
+    margin: 30px 0;
+  }
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .link-card {
+    display: block;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 16px 18px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.25s, border 0.25s, transform 0.2s;
+  }
+
+  .link-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateX(4px);
+  }
+
+  .link-title {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #ffffff;
+  }
+
+  .link-desc {
+    display: block;
+    font-size: 0.85rem;
+    color: #9a9a9a;
+  }
+
+  .donate h2 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #8a8a8a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .donate p {
+    font-size: 0.95rem;
+    color: #bdbdbd;
+    margin-bottom: 15px;
+  }
+
+  .donate-button {
+    display: block;
+    text-align: center;
+    background: transparent;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    border: 1px solid #ffffff;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+
+  .donate-button:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+  }
+
+  .thanks {
+    margin-top: 25px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+
+  .thanks h3 {
+    font-size: 0.95rem;
+    color: #8a8a8a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .thanks ul {
+    list-style: none;
+  }
+
+  .thanks li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.95rem;
+    color: #e0e0e0;
+  }
+
+  .thanks li:last-child {
+    border-bottom: none;
+  }
+
+  .thanks .donor {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .thanks .name {
+    font-weight: 600;
+    color: #ffffff;
+    word-break: break-word;
+  }
+
+  .thanks .comment {
+    font-size: 0.85rem;
+    color: #9a9a9a;
+    font-style: italic;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  .thanks .amount {
+    color: #ffffff;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .thanks .empty {
+    color: #6b6b6b;
+    font-style: italic;
+    font-size: 0.9rem;
+    display: block;
+  }
+
+  @media (max-width: 480px) {
+    .card {
+      padding: 30px 20px;
+    }
+
+    .card h1 {
+      font-size: 1.3rem;
+    }
+
+    #matrix {
+      opacity: 0.35;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <canvas id="matrix"></canvas>
+
+  <main class="card">
+    <h1>Не хочешь платить за подписку VPN?</h1>
+    <p class="subtitle">Мы собираем самые свежие ключи в одной подписке — <span>бесплатно 🔥</span></p>
+
+    <p class="bio">
+      <strong>Haven VPN</strong> — твой бесплатный доступ к сети
+    </p>
+
+    <div class="features">
+      <h2>Что у нас:</h2>
+      <ul>
+        <li>Регулярные обновления 🔄</li>
+        <li>Проверенные сервера 🔎</li>
+        <li>Без ограничений по трафику ⌛</li>
+        <li>Обходы глушилок 🛡️</li>
+      </ul>
+    </div>
+
+    <p class="cta-text">📌 Подписывайся и забирай в закреп посте:</p>
+
+    <a class="tg-button" href="http://t.me/hiddenwikipedia" target="_blank" rel="noopener">
+      Перейти в Telegram 🔗
+    </a>
+
+    <div class="divider"></div>
+
+    <div class="links">
+      <a class="link-card" href="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/HavenAuto" target="_blank" rel="noopener">
+        <span class="link-title">⚡ Подписка с автовыбором</span>
+        <span class="link-desc">HavenAuto — сервер выбирается автоматически</span>
+      </a>
+
+      <a class="link-card" href="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/Haven" target="_blank" rel="noopener">
+        <span class="link-title">🛠 Подписка с ручным подключением</span>
+        <span class="link-desc">Haven — выбор сервера вручную</span>
+      </a>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="donate">
+      <h2>Поддержать проект ❤️</h2>
+      <p>Проект живёт только благодаря вам.</p>
+      <a class="donate-button" href="https://pay.cloudtips.ru/p/5d840674" target="_blank" rel="noopener">
+        💸 Задонатить
+      </a>
+
+      <div class="thanks">
+        <h3>🙏 Спасибо тем, кто поддержал:</h3>
+        <ul id="thanksList">
+          <li class="empty">Пока никто не задонатил — стань первым!</li>
+        </ul>
+      </div>
+    </div>
+
+  </main>
+
+<script>
+  const donations = [
+    { name: 'labi-le', amount: '500 ₽', comment: '' },
+    { name: 'de hoh', amount: '50 ₽', comment: 'Брат, сделай серваки что ру сайты тоже открывались и в тоже время чтобы работал во время БС, а так за ВПН спасиб' },
+    { name: 'Светлана', amount: '200 ₽', comment: 'Спасибо вам' },
+  ];
+
+  const list = document.getElementById('thanksList');
+
+  function renderDonations() {
+    if (donations.length === 0) {
+      list.innerHTML = '<li class="empty">Пока никто не задонатил — стань первым!</li>';
+      return;
+    }
+
+    list.innerHTML = donations.map(d => `
+      <li>
+        <div class="donor">
+          <span class="name">${d.name}</span>
+          ${d.comment ? `<span class="comment">«${d.comment}»</span>` : ''}
+        </div>
+        <span class="amount">${d.amount}</span>
+      </li>
+    `).join('');
+  }
+
+  renderDonations();
+
+  const canvas = document.getElementById('matrix');
+  const ctx = canvas.getContext('2d');
+
+  let width, height, columns, drops;
+  const fontSize = 16;
+  const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワンABCDEFGHIJKLMNOPQRSTUVWXYZ<>{}[]()/*+-=';
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    columns = Math.floor(width / fontSize);
+    drops = new Array(columns).fill(1);
+  }
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      const char = chars[Math.floor(Math.random() * chars.length)];
+
+      const brightness = Math.random();
+      if (brightness > 0.7) {
+        ctx.fillStyle = '#ffffff';
+      } else if (brightness > 0.35) {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+      } else {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+      }
+
+      ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+      if (drops[i] * fontSize > height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  setInterval(draw, 50);
+</script>
+
+</body>
+</html>
