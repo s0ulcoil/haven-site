@@ -156,7 +156,6 @@
     color: inherit;
     cursor: pointer;
     transition: background 0.25s, border 0.25s, transform 0.2s;
-    overflow: hidden;
   }
 
   .link-card:hover {
@@ -180,27 +179,6 @@
     display: block;
     font-size: 0.85rem;
     color: #9a9a9a;
-  }
-
-  .copy-toast {
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    background: #ffffff;
-    color: #000000;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 3px 8px;
-    border-radius: 6px;
-    opacity: 0;
-    transform: translateY(-5px);
-    transition: opacity 0.25s, transform 0.25s;
-    pointer-events: none;
-  }
-
-  .link-card.copied .copy-toast {
-    opacity: 1;
-    transform: translateY(0);
   }
 
   .donate h2 {
@@ -307,6 +285,139 @@
     display: block;
   }
 
+  /* ===== МОДАЛЬНОЕ ОКНО ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal {
+    max-width: 460px;
+    width: 100%;
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 30px 28px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95);
+    transform: translateY(20px) scale(0.96);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-align: center;
+  }
+
+  .modal-overlay.active .modal {
+    transform: translateY(0) scale(1);
+  }
+
+  .modal-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+    line-height: 1;
+  }
+
+  .modal h3 {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+
+  .modal p {
+    font-size: 0.95rem;
+    color: #bdbdbd;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .clients {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 22px;
+  }
+
+  .client {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #e0e0e0;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .modal-steps {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+  }
+
+  .modal-steps ol {
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .modal-steps li {
+    counter-increment: step;
+    position: relative;
+    padding: 6px 0 6px 26px;
+    font-size: 0.9rem;
+    color: #d0d0d0;
+  }
+
+  .modal-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 18px;
+    height: 18px;
+    background: #ffffff;
+    color: #000000;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-close {
+    width: 100%;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 13px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .modal-close:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+  }
+
   @media (max-width: 480px) {
     .card {
       padding: 30px 20px;
@@ -318,6 +429,10 @@
 
     #matrix {
       opacity: 0.35;
+    }
+
+    .modal {
+      padding: 24px 20px;
     }
   }
 </style>
@@ -356,13 +471,11 @@
       <a class="link-card" data-link="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/HavenAuto">
         <span class="link-title">⚡ Подписка с автовыбором</span>
         <span class="link-desc">HavenAuto — сервер выбирается автоматически</span>
-        <span class="copy-toast">✅ Скопировано</span>
       </a>
 
       <a class="link-card" data-link="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/Haven">
         <span class="link-title">🛠 Подписка с ручным подключением</span>
         <span class="link-desc">Haven — выбор сервера вручную</span>
-        <span class="copy-toast">✅ Скопировано</span>
       </a>
     </div>
 
@@ -384,6 +497,34 @@
     </div>
 
   </main>
+
+  <!-- Модальное окно -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <div class="modal-icon">✅</div>
+      <h3>Ссылка скопирована!</h3>
+      <p>Вставь её в свой VPN-клиент, чтобы подключиться.</p>
+
+      <div class="clients">
+        <span class="client">INCY</span>
+        <span class="client">Happ</span>
+        <span class="client">NekoBox</span>
+        <span class="client">v2rayNG</span>
+        <span class="client">Streisand</span>
+        <span class="client">FoXray</span>
+      </div>
+
+      <div class="modal-steps">
+        <ol>
+          <li>Открой VPN-клиент</li>
+          <li>Найди «Добавить подписку» или «Импорт из буфера»</li>
+          <li>Вставь ссылку и сохрани</li>
+        </ol>
+      </div>
+
+      <button class="modal-close" id="modalClose">Понятно</button>
+    </div>
+  </div>
 
 <script>
   const donations = [
@@ -413,30 +554,50 @@
 
   renderDonations();
 
+  const modal = document.getElementById('modal');
+  const modalClose = document.getElementById('modalClose');
   const linkCards = document.querySelectorAll('.link-card');
+
+  async function copyToClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (err) {
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      temp.style.position = 'fixed';
+      temp.style.opacity = '0';
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+    }
+  }
+
+  function openModal() {
+    modal.classList.add('active');
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+  }
 
   linkCards.forEach(card => {
     card.addEventListener('click', async (e) => {
       e.preventDefault();
-
       const link = card.getAttribute('data-link');
-
-      try {
-        await navigator.clipboard.writeText(link);
-      } catch (err) {
-        const temp = document.createElement('textarea');
-        temp.value = link;
-        temp.style.position = 'fixed';
-        temp.style.opacity = '0';
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand('copy');
-        document.body.removeChild(temp);
-      }
-
-      card.classList.add('copied');
-      setTimeout(() => card.classList.remove('copied'), 1500);
+      await copyToClipboard(link);
+      openModal();
     });
+  });
+
+  modalClose.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
   });
 
   const canvas = document.getElementById('matrix');
