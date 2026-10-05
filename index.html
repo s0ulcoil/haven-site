@@ -11,6 +11,10 @@
     box-sizing: border-box;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     font-family: 'Segoe UI', Arial, sans-serif;
     background: #000000;
@@ -32,10 +36,139 @@
     opacity: 0.5;
   }
 
-  .card {
+  .wrapper {
     position: relative;
     z-index: 1;
     max-width: 620px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .scroll-top-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.75);
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    font-size: 0.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    text-align: center;
+    padding: 6px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .scroll-top-btn .arrow {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .scroll-top-btn:hover {
+    transform: scale(1.08);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: #ffffff;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7), 0 0 0 4px rgba(255, 255, 255, 0.08);
+  }
+
+  .scroll-top-btn:active {
+    transform: scale(0.95);
+  }
+
+  .scroll-top-btn.hidden {
+    opacity: 0;
+    transform: scale(0.6);
+    pointer-events: none;
+  }
+
+  .support {
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 18px 20px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.6s ease;
+  }
+
+  .support-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .support-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .support-title {
+    font-size: 0.95rem;
+    color: #ffffff;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .support-desc {
+    font-size: 0.82rem;
+    color: #9a9a9a;
+    line-height: 1.5;
+    margin-bottom: 14px;
+    padding-left: 36px;
+    word-break: break-word;
+  }
+
+  .support-buttons {
+    display: flex;
+    gap: 10px;
+    padding-left: 36px;
+  }
+
+  .support-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 9px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    flex: 1;
+  }
+
+  .support-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+  }
+
+  .card {
+    position: relative;
     width: 100%;
     background: rgba(0, 0, 0, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -108,8 +241,14 @@
   }
 
   .cta-text {
-    margin-bottom: 15px;
+    margin-bottom: 6px;
     color: #bdbdbd;
+  }
+
+  .cta-sub {
+    margin-bottom: 18px;
+    color: #8a8a8a;
+    font-size: 0.9rem;
   }
 
   .tg-button {
@@ -137,6 +276,14 @@
     height: 1px;
     background: rgba(255, 255, 255, 0.12);
     margin: 30px 0;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    margin-bottom: 14px;
+    color: #8a8a8a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   .links {
@@ -179,55 +326,6 @@
     display: block;
     font-size: 0.85rem;
     color: #9a9a9a;
-  }
-
-  .channel {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
-    padding: 22px 22px;
-    text-align: center;
-  }
-
-  .channel-icon {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    line-height: 1;
-  }
-
-  .channel h2 {
-    font-size: 1.1rem;
-    color: #ffffff;
-    margin-bottom: 8px;
-    text-transform: none;
-    letter-spacing: normal;
-  }
-
-  .channel p {
-    font-size: 0.92rem;
-    color: #bdbdbd;
-    margin-bottom: 18px;
-    line-height: 1.5;
-  }
-
-  .channel-button {
-    display: block;
-    text-align: center;
-    background: #ffffff;
-    color: #000000;
-    text-decoration: none;
-    padding: 13px 20px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-    border: 1px solid #ffffff;
-  }
-
-  .channel-button:hover {
-    transform: translateY(-2px);
-    background: #e0e0e0;
-    box-shadow: 0 12px 28px rgba(255, 255, 255, 0.2);
   }
 
   .donate h2 {
@@ -475,6 +573,46 @@
       font-size: 1.3rem;
     }
 
+    .support {
+      padding: 16px;
+    }
+
+    .support-icon {
+      font-size: 1.3rem;
+    }
+
+    .support-title {
+      font-size: 0.85rem;
+    }
+
+    .support-desc {
+      font-size: 0.75rem;
+      padding-left: 32px;
+    }
+
+    .support-buttons {
+      padding-left: 32px;
+      gap: 8px;
+    }
+
+    .support-btn {
+      padding: 8px 12px;
+      font-size: 0.78rem;
+    }
+
+    .scroll-top-btn {
+      width: 56px;
+      height: 56px;
+      bottom: 16px;
+      right: 16px;
+      font-size: 0.44rem;
+      padding: 5px;
+    }
+
+    .scroll-top-btn .arrow {
+      font-size: 0.85rem;
+    }
+
     #matrix {
       opacity: 0.35;
     }
@@ -489,73 +627,90 @@
 
   <canvas id="matrix"></canvas>
 
-  <main class="card">
-    <h1>Не хочешь платить за подписку VPN?</h1>
-    <p class="subtitle">Мы собираем самые свежие ключи в одной подписке — <span>бесплатно 🔥</span></p>
+  <button class="scroll-top-btn" id="scrollToSubs" title="К нашим подпискам">
+    <span>К нашим<br>подпискам</span>
+    <span class="arrow">↓</span>
+  </button>
 
-    <p class="bio">
-      <strong>Haven VPN</strong> — твой бесплатный доступ к сети
-    </p>
+  <div class="wrapper">
 
-    <div class="features">
-      <h2>Что у нас:</h2>
-      <ul>
-        <li>Регулярные обновления 🔄</li>
-        <li>Проверенные сервера 🔎</li>
-        <li>Без ограничений по трафику ⌛</li>
-        <li>Обходы глушилок 🛡️</li>
-      </ul>
-    </div>
-
-    <p class="cta-text">📌 Подписывайся и забирай в закреп посте:</p>
-
-    <a class="tg-button" href="http://t.me/hiddenwikipedia" target="_blank" rel="noopener">
-      Перейти в Telegram 🔗
-    </a>
-
-    <div class="divider"></div>
-
-    <div class="links">
-      <a class="link-card" data-link="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/HavenAuto">
-        <span class="link-title">⚡ Подписка с автовыбором</span>
-        <span class="link-desc">HavenAuto — сервер выбирается автоматически</span>
-      </a>
-
-      <a class="link-card" data-link="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/Haven">
-        <span class="link-title">🛠 Подписка с ручным подключением</span>
-        <span class="link-desc">Haven — выбор сервера вручную</span>
-      </a>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="channel">
-      <div class="channel-icon">📢</div>
-      <h2>Следи за обновлениями и розыгрышами</h2>
-      <p>Новые ключи, свежие сервера и розыгрыши подписок — всё в нашем Telegram-канале.</p>
-      <a class="channel-button" href="https://t.me/hiddenwikipedia" target="_blank" rel="noopener">
-        Подписаться на канал 🔗
-      </a>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="donate">
-      <h2>Поддержать проект ❤️</h2>
-      <p>Проект живёт только благодаря вам.</p>
-      <a class="donate-button" href="https://pay.cloudtips.ru/p/5d840674" target="_blank" rel="noopener">
-        💸 Задонатить
-      </a>
-
-      <div class="thanks">
-        <h3>🙏 Спасибо тем, кто поддержал:</h3>
-        <ul id="thanksList">
-          <li class="empty">Пока никто не задонатил — стань первым!</li>
-        </ul>
+    <div class="support">
+      <div class="support-head">
+        <div class="support-icon">💬</div>
+        <h3 class="support-title">Поддержка / Сотрудничество</h3>
+      </div>
+      <p class="support-desc">По любым вопросам, проблемам с подключением, рекламе и партнёрству — пишите в Telegram или на почту.</p>
+      <div class="support-buttons">
+        <a class="support-btn" href="https://t.me/s0ulcoil" target="_blank" rel="noopener">
+          ✈️ Telegram
+        </a>
+        <a class="support-btn" href="mailto:havenVPNSupport@gmail.com">
+          ✉️ Почта
+        </a>
       </div>
     </div>
 
-  </main>
+    <main class="card">
+      <h1>Не хочешь платить за подписку VPN?</h1>
+      <p class="subtitle">Мы собираем самые свежие ключи в одной подписке — <span>бесплатно 🔥</span></p>
+
+      <p class="bio">
+        <strong>Haven VPN</strong> — твой бесплатный доступ к сети
+      </p>
+
+      <div class="features">
+        <h2>Что у нас:</h2>
+        <ul>
+          <li>Регулярные обновления 🔄</li>
+          <li>Проверенные сервера 🔎</li>
+          <li>Без ограничений по трафику ⌛</li>
+          <li>Обходы глушилок 🛡️</li>
+        </ul>
+      </div>
+
+      <p class="cta-text">📌 Подписывайся и забирай в закреп посте:</p>
+      <p class="cta-sub">Следи за обновлениями и розыгрышами в нашем канале</p>
+
+      <a class="tg-button" href="http://t.me/hiddenwikipedia" target="_blank" rel="noopener">
+        Перейти в Telegram 🔗
+      </a>
+
+      <div class="divider"></div>
+
+      <h2 class="section-title" id="subsAnchor">Наши подписки</h2>
+
+      <div class="links">
+        <a class="link-card" data-link="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/HavenAuto">
+          <span class="link-title">⚡ Подписка с автовыбором</span>
+          <span class="link-desc">Сервер выбирается автоматически</span>
+        </a>
+
+        <a class="link-card" data-link="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/Haven">
+          <span class="link-title">🛠 Подписка с ручным подключением</span>
+          <span class="link-desc">Выбор сервера вручную</span>
+        </a>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="donate">
+        <h2>Поддержать проект ❤️</h2>
+        <p>Проект живёт только благодаря вам.</p>
+        <a class="donate-button" href="https://pay.cloudtips.ru/p/5d840674" target="_blank" rel="noopener">
+          💸 Задонатить
+        </a>
+
+        <div class="thanks">
+          <h3>🙏 Спасибо тем, кто поддержал:</h3>
+          <ul id="thanksList">
+            <li class="empty">Пока никто не задонатил — стань первым!</li>
+          </ul>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
 
   <div class="modal-overlay" id="modal">
     <div class="modal">
@@ -657,6 +812,28 @@
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
   });
+
+  const scrollToSubs = document.getElementById('scrollToSubs');
+
+  scrollToSubs.addEventListener('click', () => {
+    const target = document.getElementById('subsAnchor');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  const SCROLL_THRESHOLD = 80;
+
+  function toggleScrollButton() {
+    if (window.scrollY > SCROLL_THRESHOLD) {
+      scrollToSubs.classList.add('hidden');
+    } else {
+      scrollToSubs.classList.remove('hidden');
+    }
+  }
+
+  window.addEventListener('scroll', toggleScrollButton, { passive: true });
+  toggleScrollButton();
 
   const canvas = document.getElementById('matrix');
   const ctx = canvas.getContext('2d');
