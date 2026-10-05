@@ -181,6 +181,55 @@
     color: #9a9a9a;
   }
 
+  .channel {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 22px 22px;
+    text-align: center;
+  }
+
+  .channel-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
+  .channel h2 {
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  .channel p {
+    font-size: 0.92rem;
+    color: #bdbdbd;
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+
+  .channel-button {
+    display: block;
+    text-align: center;
+    background: #ffffff;
+    color: #000000;
+    text-decoration: none;
+    padding: 13px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    border: 1px solid #ffffff;
+  }
+
+  .channel-button:hover {
+    transform: translateY(-2px);
+    background: #e0e0e0;
+    box-shadow: 0 12px 28px rgba(255, 255, 255, 0.2);
+  }
+
   .donate h2 {
     font-size: 1rem;
     margin-bottom: 10px;
@@ -285,7 +334,6 @@
     display: block;
   }
 
-  /* ===== МОДАЛЬНОЕ ОКНО ===== */
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -481,6 +529,17 @@
 
     <div class="divider"></div>
 
+    <div class="channel">
+      <div class="channel-icon">📢</div>
+      <h2>Следи за обновлениями и розыгрышами</h2>
+      <p>Новые ключи, свежие сервера и розыгрыши подписок — всё в нашем Telegram-канале.</p>
+      <a class="channel-button" href="https://t.me/hiddenwikipedia" target="_blank" rel="noopener">
+        Подписаться на канал 🔗
+      </a>
+    </div>
+
+    <div class="divider"></div>
+
     <div class="donate">
       <h2>Поддержать проект ❤️</h2>
       <p>Проект живёт только благодаря вам.</p>
@@ -498,7 +557,6 @@
 
   </main>
 
-  <!-- Модальное окно -->
   <div class="modal-overlay" id="modal">
     <div class="modal">
       <div class="modal-icon">✅</div>
