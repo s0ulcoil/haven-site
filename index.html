@@ -139,11 +139,10 @@
     transition: background 0.5s ease, color 0.5s ease;
   }
 
-  /* ВЕРХНЯЯ ПАНЕЛЬ (Языки) */
   .top-controls {
     position: fixed;
     top: 20px;
-    right: 80px; /* Отступ, чтобы не перекрывать шестеренку */
+    right: 80px;
     z-index: 999;
     display: flex;
     align-items: center;
@@ -179,7 +178,6 @@
     background: var(--btn-hover);
   }
 
-  /* КОНТЕЙНЕР */
   .wrapper {
     position: relative;
     z-index: 1;
@@ -190,7 +188,6 @@
     gap: 24px;
   }
 
-  /* АДАПТАЦИЯ ПОД ПК */
   @media (min-width: 1024px) {
     .wrapper {
       max-width: 1200px;
@@ -201,7 +198,6 @@
     }
   }
 
-  /* НАСТРОЙКИ */
   .settings-btn {
     position: fixed; top: 20px; right: 20px; z-index: 999;
     width: 48px; height: 48px; border-radius: 50%;
@@ -241,7 +237,6 @@
   .theme-dot[data-theme="blue"] { background: #60a5fa; }
   .theme-dot[data-theme="red"] { background: #f87171; }
 
-  /* КНОПКА СКРОЛЛА */
   .scroll-top-btn {
     position: fixed; bottom: 20px; right: 20px; z-index: 999;
     width: 64px; height: 64px; border-radius: 50%;
@@ -258,12 +253,10 @@
   .scroll-top-btn:active { transform: scale(0.94); }
   .scroll-top-btn.hidden { opacity: 0; transform: scale(0.5) rotate(-45deg); pointer-events: none; }
 
-  /* СКРЫТИЕ КНОПКИ НА ПК */
   @media (min-width: 1024px) {
     .scroll-top-btn { display: none !important; }
   }
 
-  /* ОБЩИЕ СТИЛИ ДЛЯ ПАНЕЛЕЙ */
   .panel {
     position: relative; width: 100%; background: var(--card-bg);
     border: 1px solid var(--card-border); border-radius: 20px; padding: 40px 30px;
@@ -315,7 +308,6 @@
   .link-card:hover .link-title { color: var(--accent); }
   .link-desc { display: block; font-size: 0.85rem; color: var(--text-muted); }
 
-  /* ДОНАТЫ */
   .donate { display: flex; flex-direction: column; gap: 15px; }
   .donate h2 { font-size: 1rem; color: var(--text-faint); text-transform: uppercase; letter-spacing: 1px; }
   .donate p { font-size: 0.95rem; color: var(--text-soft); }
@@ -339,7 +331,6 @@
   .thanks .amount { color: var(--text); font-weight: 600; white-space: nowrap; }
   .thanks .empty { color: var(--text-faint); font-style: italic; font-size: 0.9rem; display: block; }
 
-  /* ПОДДЕРЖКА */
   .support {
     width: 100%; background: var(--card-bg); border: 1px solid var(--card-border);
     border-radius: 20px; padding: 24px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -360,7 +351,6 @@
   }
   .support-btn:hover { background: var(--btn-hover); transform: translateY(-2px) scale(1.02); border-color: var(--accent); }
 
-  /* МОДАЛКА */
   .modal-overlay {
     position: fixed; inset: 0; z-index: 1000; background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
@@ -389,7 +379,7 @@
 
   @media (max-width: 480px) {
     body { padding: 70px 15px 30px; align-items: flex-start; }
-    .top-controls { top: 14px; right: 62px; } /* Сдвигаем, чтобы не налезть на шестеренку */
+    .top-controls { top: 14px; right: 62px; }
     .settings-btn { top: 14px; right: 14px; width: 42px; height: 42px; font-size: 1.2rem; }
     .settings-panel { top: 66px; right: 14px; left: 14px; width: auto; }
     .panel { padding: 30px 20px; gap: 16px; }
@@ -465,12 +455,14 @@
       <h2 class="section-title" id="subsAnchor" data-i18n="subs-title">Наши подписки</h2>
 
       <div class="links">
-        <a class="link-card" data-link="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/HavenAuto">
+        <!-- ССЫЛКА НА АВТО-ПОДПИСКУ -->
+        <a class="link-card" data-link="https://pastefy.app/3dGbucbi/raw">
           <span class="link-title" data-i18n="link-1-title">⚡ Подписка с автовыбором</span>
           <span class="link-desc" data-i18n="link-1-desc">Сервер выбирается автоматически</span>
         </a>
 
-        <a class="link-card" data-link="https://gitverse.ru/api/repos/soulcoil/Haven/raw/branch/master/Haven">
+        <!-- ССЫЛКА НА РУЧНУЮ ПОДПИСКУ -->
+        <a class="link-card" data-link="https://pastefy.app/36UU9c1b/raw">
           <span class="link-title" data-i18n="link-2-title">🛠 Подписка с ручным подключением</span>
           <span class="link-desc" data-i18n="link-2-desc">Выбор сервера вручную</span>
         </a>
@@ -634,7 +626,6 @@
       }
     });
 
-    // Обновляем активные кнопки в верхней панели
     document.querySelectorAll('.lang-btn-top').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
@@ -752,7 +743,6 @@
     dot.addEventListener('click', () => applyTheme(dot.getAttribute('data-theme')));
   });
 
-  // Переключение языка с верхней панели
   langBtnsTop.forEach(btn => {
     btn.addEventListener('click', () => updateLanguage(btn.getAttribute('data-lang')));
   });
