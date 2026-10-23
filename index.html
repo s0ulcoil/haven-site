@@ -395,7 +395,6 @@
 </head>
 <body>
 
-  <!-- Кнопки языков наверху -->
   <div class="top-controls">
     <button class="lang-btn-top" data-lang="ru">RU</button>
     <button class="lang-btn-top" data-lang="en">EN</button>
@@ -424,7 +423,6 @@
 
   <div class="wrapper">
 
-    <!-- ЛЕВАЯ КОЛОНКА -->
     <div class="panel">
       <h1 data-i18n="main-title">Не хочешь платить за подписку VPN?</h1>
       <p class="subtitle" data-i18n="main-subtitle">Мы собираем самые свежие ключи в одной подписке — <span>бесплатно 🔥</span></p>
@@ -455,21 +453,19 @@
       <h2 class="section-title" id="subsAnchor" data-i18n="subs-title">Наши подписки</h2>
 
       <div class="links">
-        <!-- ССЫЛКА НА АВТО-ПОДПИСКУ -->
-        <a class="link-card" data-link="https://pastefy.app/3dGbucbi/raw">
+        <!-- ОБНОВЛЕННЫЕ ССЫЛКИ НА GITHUB -->
+        <a class="link-card" data-link="https://raw.githubusercontent.com/s0ulcoil/HavenVPN/refs/heads/main/HavenAuto">
           <span class="link-title" data-i18n="link-1-title">⚡ Подписка с автовыбором</span>
           <span class="link-desc" data-i18n="link-1-desc">Сервер выбирается автоматически</span>
         </a>
 
-        <!-- ССЫЛКА НА РУЧНУЮ ПОДПИСКУ -->
-        <a class="link-card" data-link="https://pastefy.app/36UU9c1b/raw">
+        <a class="link-card" data-link="https://raw.githubusercontent.com/s0ulcoil/HavenVPN/refs/heads/main/Haven">
           <span class="link-title" data-i18n="link-2-title">🛠 Подписка с ручным подключением</span>
           <span class="link-desc" data-i18n="link-2-desc">Выбор сервера вручную</span>
         </a>
       </div>
     </div>
 
-    <!-- ПРАВАЯ КОЛОНКА -->
     <div style="display: flex; flex-direction: column; gap: 24px;">
       
       <div class="panel donate">
@@ -535,7 +531,6 @@
   </div>
 
 <script>
-  // ===== ПЕРЕВОДЫ =====
   const translations = {
     ru: {
       settings: "Настройки",
@@ -571,8 +566,7 @@
       "modal-step-1": "Открой VPN-клиент",
       "modal-step-2": "Найди «Добавить подписку» или «Импорт из буфера»",
       "modal-step-3": "Вставь ссылку и сохрани",
-      "btn-close": "Понятно",
-      "thanks-title-item": "🙏 Спасибо тем, кто поддержал:"
+      "btn-close": "Понятно"
     },
     en: {
       settings: "Settings",
@@ -633,7 +627,6 @@
     renderDonations();
   }
 
-  // ===== ДОНАТЫ =====
   const donations = [
     { name: 'labi-le', amount: '500 ₽', comment: '' },
     { name: 'de hoh', amount: '50 ₽', comment: 'Брат, сделай серваки что ру сайты тоже открывались и в тоже время чтобы работал во время БС, а так за ВПН спасиб' },
@@ -660,7 +653,6 @@
     `).join('');
   }
 
-  // ===== МОДАЛКА И КОПИРОВАНИЕ =====
   const modal = document.getElementById('modal');
   const modalClose = document.getElementById('modalClose');
   const linkCards = document.querySelectorAll('.link-card');
@@ -696,7 +688,6 @@
   modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-  // ===== КНОПКА СКРОЛЛА =====
   const scrollToSubs = document.getElementById('scrollToSubs');
   scrollToSubs.addEventListener('click', () => {
     const target = document.getElementById('subsAnchor');
@@ -711,7 +702,6 @@
   window.addEventListener('scroll', toggleScrollButton, { passive: true });
   toggleScrollButton();
 
-  // ===== НАСТРОЙКИ И ТЕМЫ =====
   const settingsBtn = document.getElementById('settingsBtn');
   const settingsPanel = document.getElementById('settingsPanel');
   const themeDots = document.querySelectorAll('.theme-dot');
@@ -747,7 +737,6 @@
     btn.addEventListener('click', () => updateLanguage(btn.getAttribute('data-lang')));
   });
 
-  // ===== ИНИЦИАЛИЗАЦИЯ =====
   const savedTheme = localStorage.getItem('haven-theme') || 'dark';
   applyTheme(savedTheme);
   updateLanguage(currentLang);
